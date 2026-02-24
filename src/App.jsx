@@ -1,12 +1,10 @@
 import './App.css'
-
+import { Button } from 'reactstrap';
 function App() {
 
   return (
-    <>
-      Shop Cart
-    </>
+    <Button color="danger">Danger!</Button>
   )
 }
 
-export default App
+export default App;
