@@ -8,9 +8,9 @@
     --dark-sky-blue: #c7ecee;
     --gray: #ccc;
 }
-html{
+html {
     box-sizing: border-box;
 }
-*,*::after,*::before{
+*, *::before, *::after {
     box-sizing: inherit;
 }

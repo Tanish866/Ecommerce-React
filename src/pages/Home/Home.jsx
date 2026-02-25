@@ -8,7 +8,7 @@ function Home(){
     return(
         <div className="container">
         <div className="row">
-            <div className="home-title text-center">Welcome to Shop Cart</div>
+            <div className="home-title text-center" id="home-title">Welcome to Shop Cart</div>
             <div className="category-list d-flex flex-row justify-content-between align-items-center" id="category-list">
                 
                 <Category/>

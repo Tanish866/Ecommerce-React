@@ -1,5 +1,5 @@
 import Header from './Header/Header';
-import Home from './pages/Home/Home';
+import MainRoutes from './routes/MainRoutes';
 
 
 // CSS imports
@@ -8,11 +8,10 @@ import './App.css'
 function App() {
 
   return (
-    <>
-      <Header color="light" light={true} expand="md" container="md" fixed="top" />
-
-      <Home/>
-    </>
+    <div className='app-wrapper'>
+      <Header color="light" light={true} expand="md" container="md" />
+      <MainRoutes/>
+    </div>
   )
 }
 

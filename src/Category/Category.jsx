@@ -1,9 +1,10 @@
+import { Link } from 'react-router-dom';
 import './Category.css';
 
 function Category(){
     return(
         <div className="category-items d-flex justify-content-center align-items-center">
-            <a> All Products </a>
+            <Link to="/products"> All Products </Link>
         </div>
     )
 }
