@@ -1,6 +1,5 @@
-#header{
-    position: sticky;
-    top: 0;
+.product-list-title{
+    margin-bottom: 2rem;
 }
 .product-list-box{
     flex-basis: 80%;

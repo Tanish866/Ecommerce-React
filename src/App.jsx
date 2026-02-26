@@ -9,7 +9,7 @@ function App() {
 
   return (
     <div className='app-wrapper'>
-      <Header color="light" light={true} expand="md" container="md" />
+      <Header className="header" color="light" light={true} expand="md" container="md" />
       <MainRoutes/>
     </div>
   )
