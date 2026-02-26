@@ -1,5 +1,5 @@
-import Header from './Header/Header';
 import MainRoutes from './routes/MainRoutes';
+import Header from './components/Header/Header'
 
 
 // CSS imports

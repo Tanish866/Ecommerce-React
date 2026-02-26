@@ -7,8 +7,8 @@ function MainRoutes(){
     return (
         <Routes>
             <Route path="/" element={<Home/>} />
-            <Route path="*" element={<Error/>} />
             <Route path="/products" element={<ProductList/>} />
+            <Route path="*" element={<Error/>} />
         </Routes>
     )
 }
