@@ -6,7 +6,7 @@ import './ProductBox.css';
 function ProductBox({ ProductImage, ProductName, ProductPrice }){
     return(
         <Link 
-            to="/products/2" 
+            to="/products/:id" 
             className="product-item text-decoration-none d-inline-block text-center">
             <div className="product-image">
                 <img src={ProductImage}/>

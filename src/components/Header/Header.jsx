@@ -24,7 +24,7 @@ function Header(props) {
   const toggle = () => setIsOpen(!isOpen);
 
   return (
-    <div>
+    <div className='Navbar'>
       <Navbar {...props}>
         <NavbarBrand id='title'>
           <Link to="/" >Shop Cart</Link>
@@ -35,7 +35,7 @@ function Header(props) {
             <NavItem>
             </NavItem>
             <UncontrolledDropdown nav inNavbar style={{marginRight:"2rem"}}>
-              <DropdownToggle nav caret>
+              <DropdownToggle nav caret id='options'>
                 Options
               </DropdownToggle>
               <DropdownMenu right>
@@ -45,7 +45,7 @@ function Header(props) {
                 <DropdownItem>Log Out</DropdownItem>
               </DropdownMenu>
             </UncontrolledDropdown>
-            <NavbarText>Username</NavbarText>
+            <NavbarText id='username'>Username</NavbarText>
           </Nav>
           
         </Collapse>
