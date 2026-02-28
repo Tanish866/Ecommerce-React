@@ -38,4 +38,9 @@
 .product-details-action {
     margin-top: 1.5rem;
     width: 250px;
+    
+}
+.cartbtn{
+    text-decoration: none;
+    color: black;
 }

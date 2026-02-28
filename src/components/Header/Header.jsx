@@ -39,7 +39,9 @@ function Header(props) {
                 Options
               </DropdownToggle>
               <DropdownMenu right>
-                <DropdownItem>Cart</DropdownItem>
+                <DropdownItem>
+                  <Link to="/cart" >Cart</Link>
+                </DropdownItem>
                 <DropdownItem>Settings</DropdownItem>
                 <DropdownItem divider />
                 <DropdownItem>

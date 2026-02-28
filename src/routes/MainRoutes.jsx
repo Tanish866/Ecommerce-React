@@ -5,6 +5,7 @@ import ProductList from "../pages/ProductList/ProductList";
 import ProductDetails from "../pages/ProductDetails/ProductDetails";
 import Signup from "../pages/Authentication/Signup";
 import Login from "../pages/Authentication/Login";
+import Cart from "../pages/Cart/Cart";
 
 function MainRoutes(){
     return (
@@ -14,6 +15,7 @@ function MainRoutes(){
             <Route path="/products/:id"  element={<ProductDetails/>}/>
             <Route path="/signup" element={<Signup/>} />
             <Route path="/signin" element={<Login/>} />
+            <Route path="/cart" element={<Cart/>}/>
             <Route path="*" element={<Error/>} />
         </Routes>
     )

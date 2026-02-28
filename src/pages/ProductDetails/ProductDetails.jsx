@@ -1,6 +1,5 @@
-
 import { Link } from 'react-router-dom';
-import ProductImage from '../../assets/Product.jpg';
+
 // CSS Imports
 import './ProductDetails.css';
 
@@ -33,10 +32,13 @@ function ProductDetails(){
                                 to="/cart/2"
                                 id="goToCartbtn" 
                                 className="product-details-action btn btn-warning">
-                                Go to Cart
+                                    <Link to="/cart" className='cartbtn' >
+                                        Go to Cart
+                                    </Link>
                             </Link>
                         </div>
-                    </div>                    
+                    </div>
+                                   
                 </div>
             </div>
         </div>
