@@ -1,11 +1,27 @@
+import { useEffect, useState } from 'react';
 import ProductImage from '../../assets/product.jpg';
 import FilterProduct from '../../components/FilterProduct/FilterProduct';
 import ProductBox from '../../components/ProductBox/ProductBox';
+import { getAllProduct } from '../../apis/fakeStoreProdApi';
 
 //CSS imports
 import './ProductList.css';
+import axios from 'axios';
 
 function ProductList(){
+
+    const [productList, setProductList] = useState(null);
+
+    async function downloadAllProduct(){
+        const response = await axios.get(getAllProduct());
+        console.log(response.data);
+        setProductList(response.data);
+    }
+
+    useEffect(() => {
+        downloadAllProduct();
+    }, []);
+
     return(
         <div className="container">
             <div className="row">
@@ -14,11 +30,12 @@ function ProductList(){
                 <div className="product-list-wrapper d-flex flex-row">
                 <FilterProduct/>
                 <div className="product-list-box" id="product-list-box">
-                    <ProductBox 
-                        ProductImage={ProductImage}
-                        ProductName={"Some Product"}
-                        ProductPrice={1000}
-                    />
+                    {productList && productList.map((product) => <ProductBox 
+                                                        {...product}
+                                                        key={product.id}
+                                                        
+                                                    />
+                        )}
                 </div>
                 </div>
             </div>

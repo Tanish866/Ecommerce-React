@@ -3,16 +3,16 @@
 import { Link } from 'react-router-dom';
 import './ProductBox.css';
 
-function ProductBox({ ProductImage, ProductName, ProductPrice }){
+function ProductBox(props){
     return(
         <Link 
             to="/products/:id" 
             className="product-item text-decoration-none d-inline-block text-center">
             <div className="product-image">
-                <img src={ProductImage}/>
+                <img src={props.image}/>
             </div>
-            <div className="product-name">{ProductName}</div>
-            <div className="product-price">{ProductPrice}</div>
+            <div className="product-name">{props.title.substring(0, 12) + "..."}</div>
+            <div className="product-price">&#8377; {props.price}</div>
         </Link>
     );
 }
