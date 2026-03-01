@@ -1,9 +1,23 @@
-import { Link } from 'react-router-dom';
+import { Link, useParams } from 'react-router-dom';
 
 // CSS Imports
 import './ProductDetails.css';
+import { useEffect } from 'react';
+import axios from 'axios';
+import { getProductById } from '../../apis/fakeStoreProdApi';
 
 function ProductDetails(){
+
+    const { id } = useParams();
+    async function downloadProductById(){
+        const response = await axios.get(getProductById(id));
+        console.log(response.data);
+    }
+
+    useEffect(() => {
+        downloadProductById();
+    }, [id]);
+
     return (
         <div classNameName="product-details">
             <div classNameName="container">
