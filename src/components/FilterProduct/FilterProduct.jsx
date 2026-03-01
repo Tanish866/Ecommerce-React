@@ -1,10 +1,20 @@
+import useCategory from '../../hooks/useCategory';
+import { useNavigate } from 'react-router-dom';
+
 // CSS Imports
 import './FilterProduct.css';
+
 
 function FilterProduct(){
 
     const minPriceOptions = [0, 10, 50, 100, 200, 1000];
     const maxPriceOptions = [0, 10, 50, 100, 200, 1000];
+
+    const [categories] = useCategory();
+    const navigate = useNavigate();
+    function handleCategoryNavigate(category){
+        navigate(`/products?category=${category}`);
+    }
 
     return(
          <div className="product-list-sidebar d-flex flex-column">
@@ -14,10 +24,17 @@ function FilterProduct(){
             </div>
             <div className="sidebar-title fw-bold">Categories</div>
             <div className="categorylist" id="categorylist">
-                <a className="d-flex text-decoration-none">Electronics</a>
-                <a className="d-flex text-decoration-none">Kitchen</a>
-                <a className="d-flex text-decoration-none">Jewellery</a>
-                <a className="d-flex text-decoration-none">Men's wear</a>
+
+                {
+                    categories && 
+                    categories.map((Category) => <a
+                                                    onClick={() => handleCategoryNavigate(Category)}
+                                                    className="d-flex text-decoration-none"
+                                                    key={Category}
+                                                >
+                                                    {Category}
+                                            </a>)}
+
             </div>
             <div className="sidebar-title">Filter by price</div>
             <div className="price-filter">
@@ -29,7 +46,7 @@ function FilterProduct(){
                     </div>
                     <div className="form-group">
                         <select name="maxPrice" className="form-select" id="maxPrice">
-                            {minPriceOptions.map(optionValue => <option key={optionValue} value={optionValue} >{optionValue}</option>)}
+                            {maxPriceOptions.map(optionValue => <option key={optionValue} value={optionValue} >{optionValue}</option>)}
                         </select>
                     </div>
                 </div>
