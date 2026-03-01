@@ -9,3 +9,7 @@ export function getAllProduct(){
 export function getProductByCategory(category){
     return `https://fakestoreapi.com/products/category/${category}`;
 }
+
+export function getProduct(id){
+    return `https://fakestoreapi.com/products/${id}`;
+}

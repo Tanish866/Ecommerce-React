@@ -4,9 +4,11 @@ import { Link } from 'react-router-dom';
 import './ProductBox.css';
 
 function ProductBox(props){
+
+    
     return(
         <Link 
-            to="/products/:id" 
+            to={`/products/${props.id}`}
             className="product-item text-decoration-none d-inline-block text-center">
             <div className="product-image">
                 <img src={props.image}/>

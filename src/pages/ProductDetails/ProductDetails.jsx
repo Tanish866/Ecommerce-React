@@ -2,41 +2,46 @@ import { Link, useParams } from 'react-router-dom';
 
 // CSS Imports
 import './ProductDetails.css';
-import { useEffect } from 'react';
+import { getProduct } from '../../apis/fakeStoreProdApi';
 import axios from 'axios';
+import { useEffect, useState } from 'react';
 
 function ProductDetails(){
 
-    const { id } = useParams();
-    async function downloadProductById(){
-        const response = await axios.get(getProductById(id));
-        console.log(response.data);
+    const {id} = useParams();
+    const [product, setProduct] = useState();
+
+    async function downloadProductById(id){
+        const response = await axios.get(getProduct(id));
+        setProduct(response.data);
+        console
     }
 
     useEffect(() => {
-        downloadProductById();
-    }, [id]);
+        downloadProductById(id);
+    }, []);
+
 
     return (
-        <div classNameName="product-details">
+        product && <div classNameName="product-details">
             <div classNameName="container">
                 <div classNameName="row">
                     <div className="product-details-wrapper d-flex justify-content-around align-items-start flex-row">
                     <div className="product-image d-flex">
                         <img 
-                            src="https://fakestoreapi.com/img/81fPKd-2AYL._AC_SL1500_t.png" 
+                            src={product.image}
                             id="product-image"
                         />
                     </div>
 
                     <div className="product-details-box d-flex flex-column">
                         <div className="product-details">
-                            <div className="product-name" id="product-name">Fjallraven - Foldsack No. 1 Backpack, Fits 15 Laptops</div>
-                            <div className="product-price fw-bold" id="product-price">₹ 109.95</div>
+                            <div className="product-name" id="product-name">{product.title}</div>
+                            <div className="product-price fw-bold" id="product-price">&#8377; {product.price}</div>
                             <div className="product-description">
                                 <div className="product-description-title fw-bold" id="product-description-title">Description</div>
                                 <div className="product-description-data" id="product-description-data">
-                                    Your perfect pack for everyday use and walks in the forest. Stash your laptop (up to 15 inches) in the padded sleeve, your everyday
+                                    {product.description}
                                 </div>
                             </div>
                         </div>
