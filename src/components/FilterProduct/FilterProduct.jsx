@@ -1,8 +1,9 @@
 import useCategory from '../../hooks/useCategory';
-import { useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 
 // CSS Imports
 import './FilterProduct.css';
+import { useRef } from 'react';
 
 
 function FilterProduct(){
@@ -14,6 +15,19 @@ function FilterProduct(){
     const navigate = useNavigate();
     function handleCategoryNavigate(category){
         navigate(`/products?category=${category}`);
+    }
+
+    const minRef = useRef(null);
+    const maxRef = useRef(null);
+
+    function filterByPrice(){
+        const min = Number(minRef.current.value);
+        const max = Number(maxRef.current.value);
+        if (min === 0 && max === 0) {
+            navigate('/products');
+            return;
+        }
+        navigate(`/products?minPrice=${min}&maxPrice=${max}`);
     }
 
     return(
@@ -40,23 +54,27 @@ function FilterProduct(){
             <div className="price-filter">
                 <div className="price-filter-select d-flex justify-content-between flex-row">
                     <div className="form-group">
-                        <select name="minPrice" className="form-select" id="minPrice">
+                        <select ref={minRef} name="minPrice" className="form-select" id="minPrice">
                             {minPriceOptions.map(optionValue => <option key={optionValue} value={optionValue} >{optionValue}</option>)}
                         </select>
                     </div>
                     <div className="form-group">
-                        <select name="maxPrice" className="form-select" id="maxPrice">
+                        <select ref={maxRef} name="maxPrice" className="form-select" id="maxPrice">
                             {maxPriceOptions.map(optionValue => <option key={optionValue} value={optionValue} >{optionValue}</option>)}
                         </select>
                     </div>
                 </div>
                 <div className="price-filter-title d-flex justify-content-between flex-row">
-                    <div className="price-filter-label-min">Min Price</div>
+                    <div className="price-filter-label-min" >Min Price</div>
                     <div className="price-filter-label-max">Max Price</div>
                 </div>
             </div>
-            <button className="btn btn-warning searchFilter" id="search">Search</button>
-            <button className="btn btn-danger clearFilter" id="clear">Clear Filter</button>
+            <button onClick={filterByPrice} className="btn btn-warning searchFilter" id="search">Search</button>
+            <button className="btn btn-danger clearFilter" id="clear">
+                <Link to={`/products?category=${''}`} className="clear">
+                    Clear Filter
+                </Link>
+            </button>
         </div>
     );
 }

@@ -14,7 +14,7 @@ function Login(){
                 <div className="login-wrapper" id="loginForm">
                     <h4 className="text-center">Login</h4>
                 </div>
-                <Auth/>
+                <Auth />
                 <div className="signup-btn text-center" id="showSignUp">
                     <Link to="/signup" >
                         Don't have an account? Sign up here

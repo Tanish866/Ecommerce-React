@@ -28,3 +28,9 @@
 .Login .signup-btn:hover{
     text-decoration: underline;
 }
+.input-group{
+    margin: 2rem 0;
+}
+.input-group button{
+    width: 100%;
+}
