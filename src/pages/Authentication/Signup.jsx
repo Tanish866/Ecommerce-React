@@ -34,7 +34,8 @@ function Signup(){
                     <h4 className="text-center">Signup</h4>
                 </div>
                 <Auth 
-                    onSubmit={onAuthformSubmit}
+                    onSubmit={onAuthformSubmit}wsl
+
                     resetForm={resetForm}
                 />
                 <div className="signup-btn text-center" id="showSignUp">

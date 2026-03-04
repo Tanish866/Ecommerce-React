@@ -1,10 +1,36 @@
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import Auth from '../../components/Auth/Auth';
+import Cookies from 'js-cookie';
 
 //CSS Imports
 import './Auth.css';
+import { signin } from '../../apis/fakeStoreProdApi';
+import axios from 'axios';
+import { useRef } from 'react';
+import { useCookies } from 'react-cookie';
 
 function Login(){
+
+    const authRef = useRef(null);
+    const navigate = useNavigate();
+    const [token, setToken] = useCookies(["jwt-token"]);
+
+
+    async function onAuthformSubmit(authArguments){
+        try {
+            const response = await axios.post(signin(), {
+                username:authArguments.username,
+                email: authArguments.email,
+                password: authArguments.password
+            });
+            navigate('/');
+            console.log(response);
+            setToken("jwt-token", response.data.token);
+        } catch (error) {
+            console.log(error);
+            
+        }
+    }
     return (
         <div className="container">
             <div className="row">
@@ -14,7 +40,10 @@ function Login(){
                 <div className="login-wrapper" id="loginForm">
                     <h4 className="text-center">Login</h4>
                 </div>
-                <Auth />
+                <Auth
+                    onSubmit={onAuthformSubmit}
+                    ref={authRef}
+                />
                 <div className="signup-btn text-center" id="showSignUp">
                     <Link to="/signup" >
                         Don't have an account? Sign up here

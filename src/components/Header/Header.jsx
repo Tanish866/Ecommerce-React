@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import {
   Collapse,
   Navbar,
@@ -13,6 +13,8 @@ import {
   DropdownItem,
   NavbarText,
 } from 'reactstrap';
+import Cookies from 'js-cookie';
+import { useCookies } from 'react-cookie';
 
 // CSS imports
 import './Header.css';
@@ -22,7 +24,7 @@ function Header(props) {
   const [isOpen, setIsOpen] = useState(false);
 
   const toggle = () => setIsOpen(!isOpen);
-
+  const [token, setToken, removeToken] = useCookies(['jwt-token']);
   return (
     <div className='Navbar'>
       <Navbar {...props}>
@@ -40,14 +42,16 @@ function Header(props) {
               </DropdownToggle>
               <DropdownMenu right>
                 <DropdownItem>
-                  <Link to="/cart" >Cart</Link>
+                  {<Link to="/cart" >Cart</Link>}
                 </DropdownItem>
                 <DropdownItem>Settings</DropdownItem>
                 <DropdownItem divider />
                 <DropdownItem>
-                  <Link to='/signup'>
-                    Log Out
-                  </Link>
+                  {token['jwt-token'] ? 
+                    <Link onClick={() => {
+                      removeToken("jwt-token");
+                    }
+                  } to='/signin'>LogOut</Link> : <Link to='/signin'>SignIn</Link>}
                 </DropdownItem>
               </DropdownMenu>
             </UncontrolledDropdown>
