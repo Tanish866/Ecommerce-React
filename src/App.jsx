@@ -1,17 +1,45 @@
-import MainRoutes from './routes/MainRoutes';
-import Header from './components/Header/Header'
+// library imports
+import { useEffect, useState } from 'react';
+import { jwtDecode } from "jwt-decode";
+import { useCookies } from 'react-cookie';
+import axios from 'axios';
 
+//Context imports
+import UserContext from './context/UserContext';
+
+// Custom components
+import Header from './components/Header/Header'
+import MainRoutes from './routes/MainRoutes';
 
 // CSS imports
 import './App.css'
 
 function App() {
 
+  const [user, setUser] = useState(null);
+  const [token, setToken] = useCookies(['jwt-token']);
+
+  function accesstoken(){
+    axios.get(`${import.meta.env.VITE_FAKE_STORE_URL}/accesstoken`, {withCredentials: true})
+    .then((res) => {
+      setToken("jwt-token", res.data.token, {httpOnly: true})
+      const tokenDetails = jwtDecode(res.data.token);
+      setUser({username: tokenDetails.user, id: tokenDetails.id});
+    });
+  }
+
+  useEffect(() => {
+    accesstoken();
+  }, []);
+
+
   return (
-    <div className='app-wrapper'>
-      <Header className="header" color="light" light={true} expand="md" container="md" />
-      <MainRoutes/>
-    </div>
+    <UserContext.Provider value={{user, setUser}}>
+      <div className='app-wrapper'>
+        <Header className="header" color="light" light={true} expand="md" container="md" />
+        <MainRoutes/>
+      </div>
+    </UserContext.Provider>
   )
 }
 

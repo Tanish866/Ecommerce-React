@@ -1,4 +1,5 @@
-import { useEffect, useState } from 'react';
+// library imports
+import { useContext, useState } from 'react';
 import {
   Collapse,
   Navbar,
@@ -13,18 +14,29 @@ import {
   DropdownItem,
   NavbarText,
 } from 'reactstrap';
-import Cookies from 'js-cookie';
 import { useCookies } from 'react-cookie';
+import { Link } from 'react-router-dom';
+import axios from 'axios';
+
+// context import
+import UserContext from '../../context/UserContext';
 
 // CSS imports
 import './Header.css';
-import { Link } from 'react-router-dom';
 
 function Header(props) {
   const [isOpen, setIsOpen] = useState(false);
+  const {user, setUser} = useContext(UserContext);
 
   const toggle = () => setIsOpen(!isOpen);
   const [token, setToken, removeToken] = useCookies(['jwt-token']);
+
+  function logout(){
+    removeToken("jwt-token", {httpOnly: true});
+    axios.get(`${import.meta.env.VITE_FAKE_STORE_URL}/logout`, {withCredentials: true});
+    setUser(null);
+  }
+
   return (
     <div className='Navbar'>
       <Navbar {...props}>
@@ -49,13 +61,13 @@ function Header(props) {
                 <DropdownItem>
                   {token['jwt-token'] ? 
                     <Link onClick={() => {
-                      removeToken("jwt-token");
+                      logout();
                     }
                   } to='/signin'>LogOut</Link> : <Link to='/signin'>SignIn</Link>}
                 </DropdownItem>
               </DropdownMenu>
             </UncontrolledDropdown>
-            <NavbarText id='username'>Username</NavbarText>
+            {user && <NavbarText id='username'>{user.username}</NavbarText>}
           </Nav>
           
         </Collapse>

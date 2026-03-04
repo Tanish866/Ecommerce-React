@@ -1,13 +1,20 @@
+// library imports
 import { Link, useNavigate } from 'react-router-dom';
+import axios from 'axios';
+import { useContext, useRef } from 'react';
+import { useCookies } from 'react-cookie';
+import { jwtDecode } from "jwt-decode";
+
+// context imports
+import UserContext from '../../context/UserContext';
+
+// custom components imports
 import Auth from '../../components/Auth/Auth';
-import Cookies from 'js-cookie';
+import { signin } from '../../apis/fakeStoreProdApi';
 
 //CSS Imports
 import './Auth.css';
-import { signin } from '../../apis/fakeStoreProdApi';
-import axios from 'axios';
-import { useRef } from 'react';
-import { useCookies } from 'react-cookie';
+
 
 function Login(){
 
@@ -15,6 +22,7 @@ function Login(){
     const navigate = useNavigate();
     const [token, setToken] = useCookies(["jwt-token"]);
 
+    const { setUser} = useContext(UserContext);
 
     async function onAuthformSubmit(authArguments){
         try {
@@ -22,10 +30,11 @@ function Login(){
                 username:authArguments.username,
                 email: authArguments.email,
                 password: authArguments.password
-            });
+            }, {withCredentials: true});
             navigate('/');
-            console.log(response);
-            setToken("jwt-token", response.data.token);
+            setToken("jwt-token", response.data.token, {httpOnly: true});
+            const tokenDetails = jwtDecode(response.data.token);
+            setUser({username: tokenDetails.user, id: tokenDetails.id});
         } catch (error) {
             console.log(error);
             
