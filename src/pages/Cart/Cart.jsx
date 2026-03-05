@@ -39,7 +39,9 @@ function Cart(){
                 <h2 className="cart-title text-center">Your Cart</h2>
             </div>
             <div className="cart-wrapper d-flex flex-row">
+                
                 <div className="orderDetails d-flex flex-column" id="orderDetails">
+                <div className="order-details-title fw-bold">Order Details</div>
                     {products.length > 0 && products.map((product) => <OrderDetails 
                                                                         key={product.id}
                                                                         title={product.title}

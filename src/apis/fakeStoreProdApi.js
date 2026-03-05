@@ -24,3 +24,7 @@ export function signin(){
 export function getCartbyUser(id){
     return `${import.meta.env.VITE_FAKE_STORE_URL}/carts/user/${id}`;
 }
+
+export function addProductToUserCart(){
+    return `${import.meta.env.VITE_FAKE_STORE_URL}/carts`;
+}

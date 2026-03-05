@@ -1,19 +1,31 @@
-import { Link, useParams } from 'react-router-dom';
+import { Link, useNavigate, useParams } from 'react-router-dom';
 
 // CSS Imports
 import './ProductDetails.css';
-import { getProduct } from '../../apis/fakeStoreProdApi';
+import { addProductToUserCart, getProduct } from '../../apis/fakeStoreProdApi';
 import axios from 'axios';
-import { useEffect, useState } from 'react';
+import { useContext, useEffect, useState } from 'react';
+import UserContext from '../../context/UserContext';
+import CartContext from '../../context/CartContext';
 
 function ProductDetails(){
 
     const {id} = useParams();
+    const navigate = useNavigate();
+    const {user} = useContext(UserContext);
     const [product, setProduct] = useState();
+    const {setCart} = useContext(CartContext)
 
     async function downloadProductById(id){
         const response = await axios.get(getProduct(id));
         setProduct(response.data);
+    }
+
+    async function addProductToCart(){
+        if(!user) return;
+        const response = await axios.put(addProductToUserCart(), {userId: user.id, productId: id});
+        setCart({...response.data});
+        navigate(`/cart/${user.id}`);
     }
 
     useEffect(() => {
@@ -44,7 +56,7 @@ function ProductDetails(){
                                 </div>
                             </div>
                         </div>
-                        <div className="product-details-action btn btn-primary text-decoration-none">Add to Cart</div>
+                        <div className="product-details-action btn btn-primary text-decoration-none" onClick={addProductToCart}>Add to Cart</div>
                             <Link 
                                 to="/cart/2"
                                 id="goToCartbtn" 

@@ -1,18 +1,17 @@
-
 // CSS impors
 import './OrderDetails.css';
 
-function OrderDetails({title, image, price, quantity}){
+function OrderDetails({title, price, image, quantity}){
     const quantitymap = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
     return(
-        <>
-            <div className="order-details-title fw-bold">Order Details</div><div className="order-details-product d-flex flex-row">
+            <>
+            <div className="order-details-product d-flex flex-row">
                 <div className="order-details-product-img d-flex">
                     <img src={image} alt="" />
                 </div>
                 <div className="order-details-product-data d-flex flex-column justify-content-center">
                     <div>{title}</div>
-                    <div>{price}</div>
+                    <div>{22.3}</div>
                 </div>
                 <div className="order-details-product-action d-flex flex-column">
                     <div className="order-details-product-quantity">
@@ -28,7 +27,8 @@ function OrderDetails({title, image, price, quantity}){
                     </div>
                 </div>
             </div>
-        </>
+            <hr/>
+            </>
     );
 }
 export default OrderDetails;
