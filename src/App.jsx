@@ -14,6 +14,7 @@ import MainRoutes from './routes/MainRoutes';
 // CSS imports
 import './App.css'
 import CartContext from './context/CartContext';
+import fetchUserCart from './helper/fetchUserCart';
 
 function App() {
 
@@ -21,19 +22,26 @@ function App() {
   const [token, setToken] = useCookies(['jwt-token']);
   const [cart, setCart] = useState({});
 
-  function accesstoken(){
-    axios.get(`${import.meta.env.VITE_FAKE_STORE_URL}/accesstoken`, {withCredentials: true})
-    .then((res) => {
-      setToken("jwt-token", res.data.token, {httpOnly: true})
-      const tokenDetails = jwtDecode(res.data.token);
-      console.log("access token details" + tokenDetails);
-      setUser({username: tokenDetails.user, id: tokenDetails.id});
-    });
+  async function accesstoken(){
+    const res = await axios.get(`${import.meta.env.VITE_FAKE_STORE_URL}/accesstoken`, {withCredentials: true})
+    setToken("jwt-token", res.data.token, {httpOnly: true})
+    const tokenDetails = jwtDecode(res.data.token);
+    console.log("access token details" + tokenDetails);
+    setUser({username: tokenDetails.user, id: tokenDetails.id});
+}
+
+  async function load(){
+    if(!user){
+      accesstoken();
+    }
+    if(user){
+      await fetchUserCart(user.id, setCart);
+    }
   }
 
   useEffect(() => {
-    accesstoken();
-  }, []);
+    load()
+  }, [user]);
 
 
   return (

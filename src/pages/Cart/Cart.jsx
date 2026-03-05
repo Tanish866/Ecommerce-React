@@ -1,15 +1,37 @@
 // CSS imports
-import { Link, useParams } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import './Cart.css';
 import OrderDetails from '../../components/OrderDetails/OrderDetails';
-import useCart from '../../hooks/useCart';
+import { useContext, useEffect, useState } from 'react';
+import CartContext from '../../context/CartContext';
+import axios from 'axios';
+import { getProduct } from '../../apis/fakeStoreProdApi';
 
 function Cart(){
 
-    const {userId} = useParams();
-    
-    const [ cart, setCart ] = useCart(userId);
 
+    const {cart} = useContext(CartContext);
+    const [products, setProduct] = useState([]);
+
+    async function downloadCart(cart){
+        if(!cart || !cart.products) return;
+
+        const productMapping = {};
+        cart.products.forEach(product => {
+            productMapping[product.productId] = product.quantity;
+        });
+
+        const productPromise = cart.products.map((product) => axios.get(getProduct(product.productId)));
+        const productPromiseResponse = await axios.all(productPromise);
+        const downloadProduct = productPromiseResponse.map((product) => ({...product.data, quantity: productMapping[product.data.id]}));
+        setProduct(downloadProduct);
+
+        
+    }
+
+    useEffect(() => {
+        downloadCart(cart);
+    }, [cart])
 
     return(
         <div className="container">
@@ -18,7 +40,13 @@ function Cart(){
             </div>
             <div className="cart-wrapper d-flex flex-row">
                 <div className="orderDetails d-flex flex-column" id="orderDetails">
-                    <OrderDetails/>
+                    {products.length > 0 && products.map((product) => <OrderDetails 
+                                                                        key={product.id}
+                                                                        title={product.title}
+                                                                        image={product.image}
+                                                                        price ={product.price}
+                                                                        quantity={product.quantity}
+                                                                     />)}
                 </div>
                 <div className="priceDetails d-flex flex-column">
                     <div className="price-details-box">
