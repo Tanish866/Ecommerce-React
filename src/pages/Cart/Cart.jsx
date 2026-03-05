@@ -5,13 +5,15 @@ import OrderDetails from '../../components/OrderDetails/OrderDetails';
 import { useContext, useEffect, useState } from 'react';
 import CartContext from '../../context/CartContext';
 import axios from 'axios';
-import { getProduct } from '../../apis/fakeStoreProdApi';
+import { getProduct, updateProuctInCart } from '../../apis/fakeStoreProdApi';
+import UserContext from '../../context/UserContext';
 
 function Cart(){
 
 
-    const {cart} = useContext(CartContext);
+    const {cart, setCart} = useContext(CartContext);
     const [products, setProduct] = useState([]);
+    const {user} = useContext(UserContext);
 
     async function downloadCart(cart){
         if(!cart || !cart.products) return;
@@ -27,6 +29,12 @@ function Cart(){
         setProduct(downloadProduct);
 
         
+    }
+
+    async function updateProduct(productId, quantity){
+        if(!user) return;
+        const response = await axios.put(updateProuctInCart(), {userId: user.id, productId, quantity});
+        setCart({...response.data});
     }
 
     useEffect(() => {
@@ -48,6 +56,7 @@ function Cart(){
                                                                         image={product.image}
                                                                         price ={product.price}
                                                                         quantity={product.quantity}
+                                                                        onRemove={() => updateProduct(product.id, 0)}
                                                                      />)}
                 </div>
                 <div className="priceDetails d-flex flex-column">
