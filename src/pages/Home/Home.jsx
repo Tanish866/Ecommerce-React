@@ -1,12 +1,17 @@
+import { useContext } from 'react';
 import Category from '../../components/Category/Category';
 import useCategory from '../../hooks/useCategory';
 
 //CSS Imports
 import './Home.css';
+import UserContext from '../../context/UserContext';
+import useCart from '../../hooks/useCart';
 
 function Home(){
 
     const [categories] = useCategory();
+    const {user} = useContext(UserContext);
+    const [cart] = useCart(user?.id);
 
     return(
         <div className="container">

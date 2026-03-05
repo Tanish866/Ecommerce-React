@@ -14,7 +14,6 @@ function ProductDetails(){
     async function downloadProductById(id){
         const response = await axios.get(getProduct(id));
         setProduct(response.data);
-        console
     }
 
     useEffect(() => {
@@ -50,7 +49,7 @@ function ProductDetails(){
                                 to="/cart/2"
                                 id="goToCartbtn" 
                                 className="product-details-action btn btn-warning">
-                                    <Link to="/cart" className='cartbtn' >
+                                    <Link to={`/cart/${id}`} className='cartbtn' >
                                         Go to Cart
                                     </Link>
                             </Link>

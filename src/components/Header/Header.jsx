@@ -23,10 +23,12 @@ import UserContext from '../../context/UserContext';
 
 // CSS imports
 import './Header.css';
+import CartContext from '../../context/CartContext';
 
 function Header(props) {
   const [isOpen, setIsOpen] = useState(false);
   const {user, setUser} = useContext(UserContext);
+  const {cart, setCart} = useContext(CartContext);
 
   const toggle = () => setIsOpen(!isOpen);
   const [token, setToken, removeToken] = useCookies(['jwt-token']);
@@ -35,6 +37,7 @@ function Header(props) {
     removeToken("jwt-token", {httpOnly: true});
     axios.get(`${import.meta.env.VITE_FAKE_STORE_URL}/logout`, {withCredentials: true});
     setUser(null);
+    setCart(null);
   }
 
   return (
@@ -53,9 +56,9 @@ function Header(props) {
                 Options
               </DropdownToggle>
               <DropdownMenu right>
-                <DropdownItem>
-                  {<Link to="/cart" >Cart</Link>}
-                </DropdownItem>
+
+                { user && <DropdownItem> <Link to={`/cart/${user.id}`}>Cart {cart && cart.products && `(${cart.products.length})`}</Link></DropdownItem> }
+
                 <DropdownItem>Settings</DropdownItem>
                 <DropdownItem divider />
                 <DropdownItem>

@@ -32,6 +32,7 @@ function Login(){
                 password: authArguments.password
             }, {withCredentials: true});
             navigate('/');
+            console.log(response.data.token);
             setToken("jwt-token", response.data.token, {httpOnly: true});
             const tokenDetails = jwtDecode(response.data.token);
             setUser({username: tokenDetails.user, id: tokenDetails.id});

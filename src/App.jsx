@@ -13,17 +13,20 @@ import MainRoutes from './routes/MainRoutes';
 
 // CSS imports
 import './App.css'
+import CartContext from './context/CartContext';
 
 function App() {
 
   const [user, setUser] = useState(null);
   const [token, setToken] = useCookies(['jwt-token']);
+  const [cart, setCart] = useState({});
 
   function accesstoken(){
     axios.get(`${import.meta.env.VITE_FAKE_STORE_URL}/accesstoken`, {withCredentials: true})
     .then((res) => {
       setToken("jwt-token", res.data.token, {httpOnly: true})
       const tokenDetails = jwtDecode(res.data.token);
+      console.log("access token details" + tokenDetails);
       setUser({username: tokenDetails.user, id: tokenDetails.id});
     });
   }
@@ -35,10 +38,12 @@ function App() {
 
   return (
     <UserContext.Provider value={{user, setUser}}>
+    <CartContext.Provider value={{cart, setCart}}>
       <div className='app-wrapper'>
         <Header className="header" color="light" light={true} expand="md" container="md" />
         <MainRoutes/>
       </div>
+    </CartContext.Provider>
     </UserContext.Provider>
   )
 }

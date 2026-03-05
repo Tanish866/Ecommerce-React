@@ -15,7 +15,7 @@ function MainRoutes(){
             <Route path="/products/:id"  element={<ProductDetails/>}/>
             <Route path="/signup" element={<Signup/>} />
             <Route path="/signin" element={<Login/>} />
-            <Route path="/cart" element={<Cart/>}/>
+            <Route path="/cart/:userId" element={<Cart/>}/>
             <Route path="*" element={<Error/>} />
         </Routes>
     )
