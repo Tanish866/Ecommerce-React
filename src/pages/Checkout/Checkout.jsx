@@ -25,7 +25,6 @@ function Checkout(){
         paymentMethod: 'cod'
     });
 
-    // ✅ Download product details to get real prices
     useEffect(() => {
         async function downloadProducts(){
             if(!cart || !cart.products) return;
@@ -46,7 +45,6 @@ function Checkout(){
         downloadProducts();
     }, [cart]);
 
-    // ✅ Real price calculations from downloaded products
     const totalPrice = products.reduce((sum, p) => sum + (p.price * p.quantity), 0);
     const deliveryCharge = totalPrice > 500 ? 0 : 50;
     const netPrice = totalPrice + deliveryCharge;
@@ -61,11 +59,10 @@ function Checkout(){
             alert('Please fill all fields');
             return;
         }
-        setCart(null); // ✅ clear cart after order
+        setCart(null); // 
         setOrderPlaced(true);
     }
 
-    // Order success screen
     if(orderPlaced){
         return(
             <div className="container">
@@ -82,7 +79,6 @@ function Checkout(){
         );
     }
 
-    // Empty cart check
     if(!cart || !cart.products || cart.products.length === 0){
         return(
             <div className="container">
@@ -101,7 +97,6 @@ function Checkout(){
             </div>
             <div className="checkout-wrapper d-flex flex-row">
 
-                {/* Left — Delivery & Payment Form */}
                 <div className="checkout-form-box d-flex flex-column">
                     <div className="checkout-section">
                         <h5 className="checkout-section-title">Delivery Details</h5>
@@ -169,7 +164,6 @@ function Checkout(){
                         </div>
                     </div>
 
-                    {/* Payment Method */}
                     <div className="checkout-section mt-3">
                         <h5 className="checkout-section-title">Payment Method</h5>
                         <div className="payment-options d-flex flex-column gap-2">
@@ -207,12 +201,10 @@ function Checkout(){
                     </div>
                 </div>
 
-                {/* Right — Order Summary */}
                 <div className="checkout-summary d-flex flex-column">
                     <div className="checkout-summary-box">
                         <h5 className="checkout-section-title">Order Summary</h5>
                         <div className="checkout-summary-items">
-                            {/* ✅ Real product names and prices */}
                             {products.map((product) => (
                                 <div key={product.id} className="checkout-summary-item d-flex justify-content-between">
                                     <div className="checkout-product-name">

@@ -1,4 +1,3 @@
-// library imports
 import { useContext, useState } from 'react';
 import {
   Collapse,
@@ -18,10 +17,7 @@ import { useCookies } from 'react-cookie';
 import { Link } from 'react-router-dom';
 import axios from 'axios';
 
-// context import
 import UserContext from '../../context/UserContext';
-
-// CSS imports
 import './Header.css';
 import CartContext from '../../context/CartContext';
 
@@ -36,7 +32,7 @@ function Header(props) {
   function logout(){
     removeToken("jwt-token", {httpOnly: true});
     axios.get(`${import.meta.env.VITE_FAKE_STORE_URL}/logout`, {withCredentials: true});
-    setUser(null);
+    setUser(null);  
     setCart(null);
   }
 
@@ -44,43 +40,38 @@ function Header(props) {
     <div className='Navbar'>
       <Navbar {...props}>
         <NavbarBrand id='title'>
-          <Link to="/" >Shop Cart</Link>
+          <Link to="/">Shop Cart</Link>
         </NavbarBrand>
         <NavbarToggler onClick={toggle} />
         <Collapse isOpen={isOpen} navbar>
           <Nav className="ms-auto" navbar>
-            <NavItem>
-            </NavItem>
             <UncontrolledDropdown nav inNavbar style={{marginRight:"2rem"}}>
               <DropdownToggle nav caret id='options'>
                 Options
               </DropdownToggle>
               <DropdownMenu right>
-
-                { user && 
-              <DropdownItem>
-                  <Link to={`/cart/${user.id}`}>
+                {user && 
+                  <DropdownItem>
+                    <Link to={`/cart/${user.id}`}>
                       Cart {cart && cart.products && cart.products.length > 0 
-                          ? `(${cart.products.length})` 
-                          : '(0)'}
-                  </Link>
-              </DropdownItem> 
-}
-
+                        ? `(${cart.products.length})` 
+                        : '(0)'}
+                    </Link>
+                  </DropdownItem>
+                }
                 <DropdownItem>Settings</DropdownItem>
                 <DropdownItem divider />
                 <DropdownItem>
-                  {token['jwt-token'] ? 
-                    <Link onClick={() => {
-                      logout();
-                    }
-                  } to='/signin'>LogOut</Link> : <Link to='/signin'>SignIn</Link>}
+                  {user ? 
+                    <Link onClick={() => logout()} to='/signin'>LogOut</Link> 
+                    : 
+                    <Link to='/signin'>SignIn</Link>
+                  }
                 </DropdownItem>
               </DropdownMenu>
             </UncontrolledDropdown>
             {user && <NavbarText id='username'>{user.username}</NavbarText>}
           </Nav>
-          
         </Collapse>
       </Navbar>
     </div>
