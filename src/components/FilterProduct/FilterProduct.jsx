@@ -1,4 +1,5 @@
 import useCategory from '../../hooks/useCategory';
+import { useSearchParams } from 'react-router-dom';
 import { Link, useNavigate } from 'react-router-dom';
 
 // CSS Imports
@@ -19,15 +20,21 @@ function FilterProduct(){
 
     const minRef = useRef(null);
     const maxRef = useRef(null);
+    const [query] = useSearchParams();
+
+    const category = query.get("category");
 
     function filterByPrice(){
         const min = Number(minRef.current.value);
         const max = Number(maxRef.current.value);
         if (min === 0 && max === 0) {
-            navigate('/products');
+            navigate(category ? `/products?category=${category}` : '/products');
             return;
         }
-        navigate(`/products?minPrice=${min}&maxPrice=${max}`);
+        navigate(category 
+        ? `/products?category=${category}&minPrice=${min}&maxPrice=${max}`
+        : `/products?minPrice=${min}&maxPrice=${max}`
+    );
     }
 
     return(

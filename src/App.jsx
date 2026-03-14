@@ -20,7 +20,7 @@ function App() {
 
   const [user, setUser] = useState(null);
   const [token, setToken] = useCookies(['jwt-token']);
-  const [cart, setCart] = useState({});
+  const [cart, setCart] = useState(null);
 
   async function accesstoken(){
     const res = await axios.get(`${import.meta.env.VITE_FAKE_STORE_URL}/accesstoken`, {withCredentials: true})

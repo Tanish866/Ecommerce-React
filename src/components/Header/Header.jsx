@@ -57,7 +57,15 @@ function Header(props) {
               </DropdownToggle>
               <DropdownMenu right>
 
-                { user && <DropdownItem> <Link to={`/cart/${user.id}`}>Cart {cart && cart.products && `(${cart.products.length})`}</Link></DropdownItem> }
+                { user && 
+              <DropdownItem>
+                  <Link to={`/cart/${user.id}`}>
+                      Cart {cart && cart.products && cart.products.length > 0 
+                          ? `(${cart.products.length})` 
+                          : '(0)'}
+                  </Link>
+              </DropdownItem> 
+}
 
                 <DropdownItem>Settings</DropdownItem>
                 <DropdownItem divider />

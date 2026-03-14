@@ -7,6 +7,7 @@ function ProductBox(props){
 
     
     return(
+        
         <Link 
             to={`/products/${props.id}`}
             className="product-item text-decoration-none d-inline-block text-center">
