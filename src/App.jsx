@@ -15,6 +15,7 @@ import MainRoutes from './routes/MainRoutes';
 import './App.css'
 import CartContext from './context/CartContext';
 import fetchUserCart from './helper/fetchUserCart';
+import Footer from './components/Footer/Footer';
 
 function App() {
 
@@ -49,7 +50,10 @@ function App() {
     <CartContext.Provider value={{cart, setCart}}>
       <div className='app-wrapper'>
         <Header className="header" color="light" light={true} expand="md" container="md" />
-        <MainRoutes/>
+        <div style={{flex: 1}}>
+          <MainRoutes/>
+        </div>
+        <Footer className="footer"/>
       </div>
     </CartContext.Provider>
     </UserContext.Provider>

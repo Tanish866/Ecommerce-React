@@ -8,6 +8,9 @@
     --dark-sky-blue: #c7ecee;
     --gray: #ccc;
 }
+body {
+    margin: 0;
+}
 html {
     box-sizing: border-box;
 }

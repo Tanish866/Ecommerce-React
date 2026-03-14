@@ -1,8 +1,13 @@
+/* App.css */
 .app-wrapper {
     display: flex;
     flex-direction: column;
+    min-height: 100vh; /* ✅ full screen height */
 }
 .header{
     margin-bottom: 0.5rem;
     height: 80px;
+}
+.footer{
+    text-align: end;
 }
