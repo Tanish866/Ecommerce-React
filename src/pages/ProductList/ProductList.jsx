@@ -30,6 +30,7 @@ function ProductList(){
 
         const minPrice = Number(query.get("minPrice"));
         const maxPrice = Number(query.get("maxPrice"));
+        const search = query.get("search")?.toLowerCase() || ''; 
         if(minPrice == 0 && maxPrice == 0){
             setFilterList(productList);
             return;
@@ -42,6 +43,11 @@ function ProductList(){
             return true;
         });
         setFilterList(filtered);
+        if(search){
+            filtered = filtered.filter(product =>
+                product.title.toLowerCase().includes(search)
+            );
+        }
 
     }, [productList, query]);
 

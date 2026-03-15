@@ -57,7 +57,6 @@ function Checkout(){
         setOrderPlaced(true);
     }
 
-    // Success screen
     if(orderPlaced){
         return(
             <div className="container text-center" style={{marginTop: '5rem'}}>
@@ -69,7 +68,6 @@ function Checkout(){
         );
     }
 
-    // Empty cart
     if(!cart || !cart.products || cart.products.length === 0){
         return(
             <div className="container text-center" style={{marginTop: '5rem'}}>
@@ -83,7 +81,6 @@ function Checkout(){
         <div className="container">
             <h2 className="checkout-title text-center">Checkout</h2>
 
-            {/* Order Summary */}
             <div className="checkout-box">
                 <h5 className="fw-bold mb-3">Order Summary</h5>
                 {products.map(product => (
@@ -105,7 +102,6 @@ function Checkout(){
                 </div>
             </div>
 
-            {/* Address */}
             <div className="checkout-box mt-3">
                 <h5 className="fw-bold mb-3">Delivery Address</h5>
                 <textarea
@@ -117,7 +113,6 @@ function Checkout(){
                 />
             </div>
 
-            {/* Buttons */}
             <div className="d-flex gap-3 mt-3 mb-5">
                 <Link to={`/cart/${user?.id}`} className="btn btn-outline-secondary">
                     Back to Cart

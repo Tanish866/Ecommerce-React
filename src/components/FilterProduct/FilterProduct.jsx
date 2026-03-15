@@ -1,10 +1,10 @@
 import useCategory from '../../hooks/useCategory';
 import { useSearchParams } from 'react-router-dom';
+import { useRef } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 
 // CSS Imports
 import './FilterProduct.css';
-import { useRef } from 'react';
 
 
 function FilterProduct(){
@@ -48,13 +48,13 @@ function FilterProduct(){
 
                 {
                     categories && 
-                    categories.map((Category) => <a
+                    categories.map((Category) => <Link
                                                     onClick={() => handleCategoryNavigate(Category)}
                                                     className="d-flex text-decoration-none"
                                                     key={Category}
                                                 >
                                                     {Category}
-                                            </a>)}
+                                            </Link>)}
 
             </div>
             <div className="sidebar-title">Filter by price</div>

@@ -1,11 +1,11 @@
 import { useContext } from 'react';
 import Category from '../../components/Category/Category';
 import useCategory from '../../hooks/useCategory';
+import useCart from '../../hooks/useCart';
+import UserContext from '../../context/UserContext';
 
 //CSS Imports
 import './Home.css';
-import UserContext from '../../context/UserContext';
-import useCart from '../../hooks/useCart';
 
 function Home(){
 

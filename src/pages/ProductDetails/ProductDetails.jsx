@@ -1,12 +1,13 @@
 import { Link, useNavigate, useParams } from 'react-router-dom';
-
-// CSS Imports
-import './ProductDetails.css';
 import { addProductToUserCart, getProduct } from '../../apis/fakeStoreProdApi';
 import axios from 'axios';
 import { useContext, useEffect, useState } from 'react';
 import UserContext from '../../context/UserContext';
 import CartContext from '../../context/CartContext';
+
+// CSS Imports
+import './ProductDetails.css';
+
 
 function ProductDetails(){
 
