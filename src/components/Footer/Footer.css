@@ -3,11 +3,9 @@
     color: black;
     padding: 1.5rem 0;
     margin-top: 4rem;
+    
 }
-.footer-title{
-    font-size: 1.2rem;
-    letter-spacing: 5px;
-}
+
 .footer-content .text-muted{
     color: black;
     font-size: 0.9rem;
