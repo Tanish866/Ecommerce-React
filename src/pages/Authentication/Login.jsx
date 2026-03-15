@@ -18,16 +18,29 @@ function Login(){
     const { setUser } = useContext(UserContext);
 
     async function onAuthformSubmit(authArguments){
-        const response = await axios.post(signin(), {
-            username: authArguments.username,
-            email: authArguments.email,
-            password: authArguments.password
-        }, {withCredentials: true});
+        try {
+            const response = await axios.post(signin(), {
+                username: authArguments.username,
+                email: authArguments.email,
+                password: authArguments.password
+            }, { withCredentials: true });
 
-        setToken("jwt-token", response.data.token, {httpOnly: true});
-        const tokenDetails = jwtDecode(response.data.token);
-        setUser({username: tokenDetails.user, id: tokenDetails.id});
-        navigate('/');
+            const receivedToken = response.data.token;
+
+            setToken("jwt-token", receivedToken, {
+                path: "/",
+                sameSite: "none",
+                secure: true
+            });
+
+            const tokenDetails = jwtDecode(receivedToken);
+            console.log("Token details:", tokenDetails);
+
+            setUser({ username: tokenDetails.user, id: tokenDetails.id });
+            navigate('/');
+        } catch(error) {
+            console.log("Login error:", error);
+        }
     }
 
     return (

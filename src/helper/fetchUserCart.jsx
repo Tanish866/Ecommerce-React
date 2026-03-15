@@ -3,15 +3,18 @@ import { getCartbyUser } from "../apis/fakeStoreProdApi";
 
 async function fetchUserCart(userId, setCart){
     try {
-        const response = await axios.get(getCartbyUser(userId));
+        const response = await axios.get(getCartbyUser(userId), {
+            withCredentials: true
+        });
         const userCart = response.data[0];
         if(!userCart || !userCart.products || userCart.products.length === 0){
-            setCart(null); 
+            setCart(null);
             return;
         }
         setCart(userCart);
     } catch(error) {
-        setCart(null); 
+        console.log("Cart fetch error:", error);
+        setCart(null);
     }
 }
 export default fetchUserCart;
