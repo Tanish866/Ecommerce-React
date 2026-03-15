@@ -35,7 +35,7 @@ function ProductList(){
             setFilterList(productList);
             return;
         }
-        const filtered = productList.filter(product => {
+        let filtered = productList.filter(product => {
             const price = product.price;
             if(minPrice > 0 && maxPrice > 0) return price >= minPrice && price <= maxPrice;
             if(minPrice > 0) return price >= minPrice;
