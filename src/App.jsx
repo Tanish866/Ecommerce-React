@@ -16,7 +16,7 @@ import './App.css'
 import CartContext from './context/CartContext';
 import fetchUserCart from './helper/fetchUserCart';
 import Footer from './components/Footer/Footer';
-
+console.log("ENV CHECK:", import.meta.env.VITE_FAKE_STORE_URL);
 function App() {
 
   const [user, setUser] = useState(null);
@@ -24,12 +24,24 @@ function App() {
   const [cart, setCart] = useState(null);
 
   async function accesstoken(){
-    const res = await axios.get(`${import.meta.env.VITE_FAKE_STORE_URL}/accesstoken`, {withCredentials: true})
-    setToken("jwt-token", res.data.token, {httpOnly: true})
-    const tokenDetails = jwtDecode(res.data.token);
-    console.log("access token details" + tokenDetails);
-    setUser({username: tokenDetails.user, id: tokenDetails.id});
-}
+    try {
+      const res = await axios.get(`${import.meta.env.VITE_FAKE_STORE_URL}/accesstoken`, {withCredentials: true});
+      
+      if (!res.data.token) {
+        // No token yet — user isn't logged in, nothing to decode
+        setUser(null);
+        return;
+      }
+
+      setToken("jwt-token", res.data.token, {httpOnly: true});
+      const tokenDetails = jwtDecode(res.data.token);
+      console.log("access token details", tokenDetails);
+      setUser({username: tokenDetails.user, id: tokenDetails.id});
+    } catch (error) {
+      console.log("Failed to fetch access token:", error);
+      setUser(null);
+    }
+  }
 
   async function load(){
     if(!user){
@@ -41,7 +53,7 @@ function App() {
   }
 
   useEffect(() => {
-    load()
+    load();
   }, [user]);
 
 

@@ -4,7 +4,6 @@ import ProductBox from '../../components/ProductBox/ProductBox';
 import { getAllProduct, getProductByCategory } from '../../apis/fakeStoreProdApi';
 import { useSearchParams } from 'react-router-dom';
 
-
 //CSS imports
 import './ProductList.css';
 import axios from 'axios';
@@ -17,7 +16,6 @@ function ProductList(){
     const [query] = useSearchParams();
 
     async function downloadAllProduct(category){
-
         const downloadUrl = category ? getProductByCategory(category) : getAllProduct();
         const response = await axios.get(downloadUrl);
         console.log(response.data);
@@ -30,25 +28,27 @@ function ProductList(){
 
         const minPrice = Number(query.get("minPrice"));
         const maxPrice = Number(query.get("maxPrice"));
-        const search = query.get("search")?.toLowerCase() || ''; 
-        if(minPrice == 0 && maxPrice == 0){
-            setFilterList(productList);
-            return;
+        const search = query.get("search")?.toLowerCase() || '';
+
+        let filtered = productList;
+
+        if (minPrice > 0 || maxPrice > 0) {
+            filtered = filtered.filter(product => {
+                const price = product.price;
+                if(minPrice > 0 && maxPrice > 0) return price >= minPrice && price <= maxPrice;
+                if(minPrice > 0) return price >= minPrice;
+                if(maxPrice > 0) return price <= maxPrice;
+                return true;
+            });
         }
-        let filtered = productList.filter(product => {
-            const price = product.price;
-            if(minPrice > 0 && maxPrice > 0) return price >= minPrice && price <= maxPrice;
-            if(minPrice > 0) return price >= minPrice;
-            if(maxPrice > 0) return price <= maxPrice;
-            return true;
-        });
-        setFilterList(filtered);
-        if(search){
+
+        if (search) {
             filtered = filtered.filter(product =>
                 product.title.toLowerCase().includes(search)
             );
         }
 
+        setFilterList(filtered);
     }, [productList, query]);
 
     useEffect(() => {
@@ -66,7 +66,7 @@ function ProductList(){
                     <FilterProduct/>
                     <div className="product-list-box" id="product-list-box">
                         {displayList && displayList.length > 0 
-                                    ?  displayList.map((product) => <ProductBox {...product}key={product.id} />)
+                                    ?  displayList.map((product) => <ProductBox {...product} key={product.id} />)
                                     :<div className="text-center w-100 mt-5 text-muted fs-5">
                                         No products found in this price range.
                                     </div>

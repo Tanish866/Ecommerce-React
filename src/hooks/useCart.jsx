@@ -6,7 +6,7 @@ function useCart(userId){
     const {cart, setCart} = useContext(CartContext);
 
     useEffect(() => {
-        fetchUserCart(userId);
+        fetchUserCart(userId, setCart);
     }, [userId]);
     return [cart, setCart];
 }

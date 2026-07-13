@@ -39,7 +39,7 @@ function FilterProduct(){
 
     return(
          <div className="product-list-sidebar d-flex flex-column">
-            <div classNameName="sidebar-title ">Search Product</div>
+            <div className="sidebar-title ">Search Product</div>
             <div className="sidebar-group form-group">
                 <input type="text" placeholder="Search by name" className="form-control"/>
             </div>
@@ -48,13 +48,15 @@ function FilterProduct(){
 
                 {
                     categories && 
-                    categories.map((Category) => <Link
-                                                    onClick={() => handleCategoryNavigate(Category)}
-                                                    className="d-flex text-decoration-none"
-                                                    key={Category}
-                                                >
-                                                    {Category}
-                                            </Link>)}
+                    categories.map((Category) => (
+                        <Link
+                            to={`/products?category=${Category}`}
+                            className="d-flex text-decoration-none"
+                            key={Category}
+                        >
+                            {Category}
+                        </Link>
+                    ))}
 
             </div>
             <div className="sidebar-title">Filter by price</div>

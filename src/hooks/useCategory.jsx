@@ -6,9 +6,15 @@ function useCategory(){
     const [categories, setCategories] = useState([]);
 
     async function downloadCategories(){
+    try {
         const response = await axios.get(getAllCategories());
-        setCategories(response.data);
+        setCategories(Array.isArray(response.data) ? response.data : []);
+    } catch (error) {
+        console.log("Failed to fetch categories:", error);
+        setCategories([]);
     }
+
+}
     
     useEffect(() => {
         downloadCategories();

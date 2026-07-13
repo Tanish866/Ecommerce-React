@@ -23,38 +23,39 @@ import CartContext from '../../context/CartContext';
 
 function Header(props) {
   const [isOpen, setIsOpen] = useState(false);
-  const {user, setUser} = useContext(UserContext);
-  const {cart, setCart} = useContext(CartContext);
+  const { user, setUser } = useContext(UserContext);
+  const { cart, setCart } = useContext(CartContext);
 
   const toggle = () => setIsOpen(!isOpen);
   const [token, setToken, removeToken] = useCookies(['jwt-token']);
 
-  function logout(){
-    removeToken("jwt-token", {httpOnly: true});
-    axios.get(`${import.meta.env.VITE_FAKE_STORE_URL}/logout`, {withCredentials: true});
-    setUser(null);  
+  function logout() {
+    removeToken("jwt-token", { httpOnly: true });
+    axios.get(`${import.meta.env.VITE_FAKE_STORE_URL}/logout`, { withCredentials: true });
+    setUser(null);
     setCart(null);
   }
 
   return (
     <div className='Navbar'>
       <Navbar {...props}>
-        <NavbarBrand id='title'>
-          <Link to="/">Shop Cart</Link>
+        <NavbarBrand tag={Link} to="/" id="title">
+          Shop Cart
         </NavbarBrand>
+
         <NavbarToggler onClick={toggle} />
         <Collapse isOpen={isOpen} navbar>
           <Nav className="ms-auto" navbar>
-            <UncontrolledDropdown nav inNavbar style={{marginRight:"2rem"}}>
+            <UncontrolledDropdown nav inNavbar style={{ marginRight: "2rem" }}>
               <DropdownToggle nav caret id='options'>
                 Options
               </DropdownToggle>
               <DropdownMenu right>
-                {user && 
+                {user &&
                   <DropdownItem>
                     <Link to={`/cart/${user.id}`}>
-                      Cart {cart && cart.products && cart.products.length > 0 
-                        ? `(${cart.products.length})` 
+                      Cart {cart && cart.products && cart.products.length > 0
+                        ? `(${cart.products.length})`
                         : '(0)'}
                     </Link>
                   </DropdownItem>
@@ -62,9 +63,9 @@ function Header(props) {
                 <DropdownItem>Settings</DropdownItem>
                 <DropdownItem divider />
                 <DropdownItem>
-                  {user ? 
-                    <Link onClick={() => logout()} to='/signin'>LogOut</Link> 
-                    : 
+                  {user ?
+                    <Link onClick={() => logout()} to='/signin'>LogOut</Link>
+                    :
                     <Link to='/signin'>SignIn</Link>
                   }
                 </DropdownItem>
