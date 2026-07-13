@@ -35,9 +35,9 @@ function ProductDetails(){
 
 
     return (
-        product && <div classNameName="product-details">
-            <div classNameName="container">
-                <div classNameName="row">
+        product && <div className="product-details">
+            <div className="container">
+                <div className="row">
                     <div className="product-details-wrapper d-flex justify-content-around align-items-start flex-row">
                     <div className="product-image d-flex">
                         <img 
@@ -58,14 +58,12 @@ function ProductDetails(){
                             </div>
                         </div>
                         <div className="product-details-action btn btn-primary text-decoration-none" onClick={addProductToCart}>Add to Cart</div>
-                            <Link 
-                                to="/cart/2"
-                                id="goToCartbtn" 
-                                className="product-details-action btn btn-warning">
-                                    <Link to={`/cart/${id}`} className='cartbtn' >
-                                        Go to Cart
-                                    </Link>
-                            </Link>
+                        <Link 
+                            to={user ? `/cart/${user.id}` : '/signin'}
+                            id="goToCartbtn" 
+                            className="product-details-action btn btn-warning cartbtn">
+                                Go to Cart
+                        </Link>
                         </div>
                     </div>
                                    

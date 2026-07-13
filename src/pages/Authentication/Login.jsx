@@ -34,7 +34,6 @@ function Login(){
             });
 
             const tokenDetails = jwtDecode(receivedToken);
-            console.log("Token details:", tokenDetails);
 
             setUser({ username: tokenDetails.user, id: tokenDetails.id });
             navigate('/');

@@ -18,9 +18,7 @@ function ProductList(){
     async function downloadAllProduct(category){
         const downloadUrl = category ? getProductByCategory(category) : getAllProduct();
         const response = await axios.get(downloadUrl);
-        console.log(response.data);
         setProductList(response.data);
-        console.log(query.get("category"));
     }
 
     useEffect(() => {

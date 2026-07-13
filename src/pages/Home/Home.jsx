@@ -8,8 +8,6 @@ import UserContext from '../../context/UserContext';
 import './Home.css';
 
 function Home(){
-    console.log("🏠 Home component rendering");
-
 
     const [categories] = useCategory();
     const {user} = useContext(UserContext);

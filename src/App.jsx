@@ -16,7 +16,6 @@ import './App.css'
 import CartContext from './context/CartContext';
 import fetchUserCart from './helper/fetchUserCart';
 import Footer from './components/Footer/Footer';
-console.log("ENV CHECK:", import.meta.env.VITE_FAKE_STORE_URL);
 function App() {
 
   const [user, setUser] = useState(null);
@@ -35,7 +34,6 @@ function App() {
 
       setToken("jwt-token", res.data.token, {httpOnly: true});
       const tokenDetails = jwtDecode(res.data.token);
-      console.log("access token details", tokenDetails);
       setUser({username: tokenDetails.user, id: tokenDetails.id});
     } catch (error) {
       console.log("Failed to fetch access token:", error);
