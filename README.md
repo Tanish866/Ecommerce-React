@@ -86,7 +86,7 @@ shop-cart/
  
 ```bash
 # Clone the repository
-git clone https://github.com/<your-username>/shop-cart.git
+git clone git@github.com:Tanish866/Ecommerce-React.git
 cd shop-cart
  
 # Install dependencies
