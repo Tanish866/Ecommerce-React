@@ -13,7 +13,6 @@ function Cart(){
     const [products, setProduct] = useState([]);
     const {user} = useContext(UserContext);
 
-    // ✅ real price calculations — updates automatically when products change
     const totalPrice = products.reduce((sum, product) => sum + (product.price * product.quantity), 0);
     const discount = 0;
     const deliveryCharge = totalPrice > 500 ? 0 : 50;

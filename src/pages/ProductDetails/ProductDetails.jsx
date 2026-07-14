@@ -57,7 +57,19 @@ function ProductDetails(){
                                 </div>
                             </div>
                         </div>
-                        <div className="product-details-action btn btn-primary text-decoration-none" onClick={addProductToCart}>Add to Cart</div>
+                        {!user ? (<Link
+                            to={'/signin'}
+                            className="product-details-action btn btn-primary text-decoration-none" 
+                            onClick={addProductToCart}
+                        >
+                            Add to Cart
+                        </Link>) : 
+                        (<div 
+                            className="product-details-action btn btn-primary text-decoration-none" 
+                            onClick={addProductToCart}
+                        >
+                            Add to Cart
+                        </div>)}
                         <Link 
                             to={user ? `/cart/${user.id}` : '/signin'}
                             id="goToCartbtn" 

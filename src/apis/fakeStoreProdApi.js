@@ -25,3 +25,6 @@ export function addProductToUserCart(){
 export function updateProuctInCart(){
     return `${import.meta.env.VITE_FAKE_STORE_URL}/carts/updateProduct`;
 }
+export function updateUser(id){
+    return `${import.meta.env.VITE_FAKE_STORE_URL}/users/${id}`;
+}

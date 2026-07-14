@@ -14,7 +14,7 @@ import {
   NavbarText,
 } from 'reactstrap';
 import { useCookies } from 'react-cookie';
-import { Link } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 import axios from 'axios';
 
 import UserContext from '../../context/UserContext';
@@ -25,13 +25,17 @@ function Header(props) {
   const [isOpen, setIsOpen] = useState(false);
   const { user, setUser } = useContext(UserContext);
   const { cart, setCart } = useContext(CartContext);
+  const location = useLocation();
 
   const toggle = () => setIsOpen(!isOpen);
   const [token, setToken, removeToken] = useCookies(['jwt-token']);
 
-  function logout() {
-    removeToken("jwt-token", { httpOnly: true });
-    axios.get(`${import.meta.env.VITE_FAKE_STORE_URL}/logout`, { withCredentials: true });
+  async function logout() {
+    try {
+      await axios.get(`${import.meta.env.VITE_FAKE_STORE_URL}/logout`, { withCredentials: true });
+    } catch (error) {
+      console.log("Logout failed:", error);
+    }
     setUser(null);
     setCart(null);
   }
@@ -53,21 +57,22 @@ function Header(props) {
               <DropdownMenu right>
                 {user &&
                   <DropdownItem>
-                    <Link to={`/cart/${user.id}`}>
+                    <Link style={{textDecoration: 'none', color: 'black'}} to={`/cart/${user.id}`}>
                       Cart {cart && cart.products && cart.products.length > 0
                         ? `(${cart.products.length})`
                         : '(0)'}
                     </Link>
                   </DropdownItem>
                 }
-                <DropdownItem>Settings</DropdownItem>
                 <DropdownItem divider />
                 <DropdownItem>
-                  {user ?
-                    <Link onClick={() => logout()} to='/signin'>LogOut</Link>
-                    :
-                    <Link to='/signin'>SignIn</Link>
-                  }
+                  {user ? (
+                    <Link style={{textDecoration: 'none', color: 'black'}} onClick={() => logout()} to='/signin'>LogOut</Link>
+                  ) : location.pathname === '/signup' ? (
+                    <Link style={{textDecoration: 'none', color: 'black'}} to='/signin'>SignIn</Link>
+                  ) : (
+                    <Link style={{textDecoration: 'none', color: 'black'}} to='/signup'>SignUp</Link>
+                  )}
                 </DropdownItem>
               </DropdownMenu>
             </UncontrolledDropdown>
