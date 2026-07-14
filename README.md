@@ -87,7 +87,7 @@ shop-cart/
 ```bash
 # Clone the repository
 git clone git@github.com:Tanish866/Ecommerce-React.git
-cd shop-cart
+cd Ecommerce-React
  
 # Install dependencies
 npm install
